@@ -24,7 +24,7 @@ const db = new Database(DBPATH);
 // Fix the route (missing slash and extra parentheses)
 app.get('/api/message', async (req, res) => {
   try {
-    const result = await db.all('SELECT * FROM message');
+    const rows= await db.all('SELECT * FROM message');
     res.json(rows);
     console.log(rows);
   } catch (err) {
