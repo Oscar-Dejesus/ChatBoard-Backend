@@ -25,7 +25,7 @@ const db = new Database(DBPATH);
 app.get('/api/message', async (req, res) => {
   try {
     const result = await db.all('SELECT * FROM message');
-    res.json([].concat(result.rows));
+    res.json(rows);
     console.log(rows);
   } catch (err) {
     console.error(err);
