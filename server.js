@@ -8,7 +8,7 @@ const port = 5050;
 
 app.use(express.json());
 app.use(cors({
-  origin: 'https://oscar-dejesus.github.io'  
+  origin: 'https://chatboard.online' 
 })); 
 const DBPATH= 'sqlitecloud://cohza82rvz.g6.sqlite.cloud:8860/auth.sqlitecloud?apikey=HrVGdAYYxb7wE0fSAHFbosEULOq2saL8By3K76OMQag';
 const db = new Database(DBPATH);
