@@ -25,7 +25,7 @@ const db = new Database(DBPATH);
 app.get('/api/message', async (req, res) => {
   try {
     const rows = await db.all('SELECT * FROM message');
-    res.json(rows);
+    res.json(Array.isArray(rows) ? rows : []);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Database query failed' });
