@@ -8,7 +8,7 @@ const port = 5050;
 
 app.use(express.json());
 app.use(cors({
-  origin: origin: [
+  origin:[
     'https://chatboard.online',
     'https://www.chatboard.online'
   ]
