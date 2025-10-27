@@ -8,7 +8,7 @@ const port = 5050;
 
 app.use(express.json());
 app.use(cors({
-  origin:'https://chatboard.online',
+  origin:'http://chatboard.online',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 })); 
