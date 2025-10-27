@@ -12,7 +12,7 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 })); 
-
+app.options('*',cors());
 const DBPATH= 'sqlitecloud://cohza82rvz.g6.sqlite.cloud:8860/auth.sqlitecloud?apikey=HrVGdAYYxb7wE0fSAHFbosEULOq2saL8By3K76OMQag';
 const db = new Database(DBPATH);
 
