@@ -7,11 +7,28 @@ const port = 5050;
 
 
 app.use(express.json());
+const allowedOrigins = [
+  'http://chatboard.online',
+  'https://chatboard.online',
+  'http://www.chatboard.online',
+  'https://www.chatboard.online'
+];
+
 app.use(cors({
-  origin:'http://chatboard.online',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  origin: function(origin, callback) {
+    // allow requests with no origin (like Postman or curl)
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true); // allowed
+    } else {
+      callback(new Error('Not allowed by CORS'), false);
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-})); 
+  credentials: true
+}));
 const DBPATH= 'sqlitecloud://cohza82rvz.g6.sqlite.cloud:8860/auth.sqlitecloud?apikey=HrVGdAYYxb7wE0fSAHFbosEULOq2saL8By3K76OMQag';
 const db = new Database(DBPATH);
 
