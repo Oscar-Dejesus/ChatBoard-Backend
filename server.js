@@ -8,11 +8,11 @@ const port = 5050;
 
 app.use(express.json());
 app.use(cors({
-  origin:[
-    'https://chatboard.online',
-    'https://www.chatboard.online'
-  ]
+  origin:'https://chatboard.online',
+  methods: 'GET, POST, PUT, DELETE',
+  allowedHeaders: 'Content-Type, Authorization',
 })); 
+
 const DBPATH= 'sqlitecloud://cohza82rvz.g6.sqlite.cloud:8860/auth.sqlitecloud?apikey=HrVGdAYYxb7wE0fSAHFbosEULOq2saL8By3K76OMQag';
 const db = new Database(DBPATH);
 
