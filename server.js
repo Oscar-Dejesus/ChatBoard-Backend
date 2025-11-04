@@ -1,12 +1,14 @@
 const express = require('express');
 const cors = require('cors');
-const { Database } = require('@sqlitecloud/drivers');  // Import sqlite3
+const { Database } = require('@sqlitecloud/drivers');
 
+const port =5050
 const app = express();
-const port = 5050;
-
-
 app.use(express.json());
+
+require('dotenv').config();
+const { Pool } = require('pg');
+
 const allowedOrigins = [
   'http://chatboard.online',
   'https://chatboard.online',
@@ -26,29 +28,27 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
 }));
-const DBPATH= 'sqlitecloud://cohza82rvz.g6.sqlite.cloud:8860/auth.sqlitecloud?apikey=HrVGdAYYxb7wE0fSAHFbosEULOq2saL8By3K76OMQag';
-const db = new Database(DBPATH);
 
-(async () => {
-  try {
-    const rows = await db.all('SELECT * FROM message');
-    console.log(rows);
-  } catch (err) {
-    console.error(err);
-  }
-})();
-// Fix the route (missing slash and extra parentheses)
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL, // Store your URL in .env
+  ssl: {
+    rejectUnauthorized: false, // Required for Render
+  },
+});
+
+
+
+
+
+
+
+
 app.get('/api/message', async (req, res) => {
   try {
-   const rows = await new Promise((resolve, reject) => {
-      db.all('SELECT * FROM message', [], (err, rows) => {
-        if (err) reject(err);
-        else resolve(rows);
-      });
-    });
+   const result = await pool.query('SELECT * FROM messages');
+    res.json(result.rows);
 
-    res.json(rows);
-    console.log('Rows returned:', rows);
     
   } catch (err) {
     console.error(err);
@@ -57,20 +57,22 @@ app.get('/api/message', async (req, res) => {
 });
 
 app.post('/api/post', async (req,res)=>{
-  const sql = 'INSERT INTO message(name,text) VALUES(?,?)'
+  const sql = 'INSERT INTO messages(name,text) VALUES ($1, $2) RETURNING *'
   try{
-    const insert = await db.run(sql,[req.body.name,req.body.message]);
+    const insert = await pool.query(sql,[req.body.name,req.body.message]);
+    res.json("posted")
     console.log("inserted")
   }catch (err){
       console.log(err.message);
   }
 })
+
 app.delete('/api/remove', async (req,res)=>{
 
-  const sql = 'DELETE FROM message WHERE id = ?'
+  const sql = 'DELETE FROM messages WHERE id = $1 RETURNING *'
   try{
-    const post = await db.run(sql,[req.body.id]);
-    console.log("removed")
+    const post = await pool.query(sql,[req.body.id]);
+    res.json("removed")
   }catch(err){
       console.log(err.message);
   }
