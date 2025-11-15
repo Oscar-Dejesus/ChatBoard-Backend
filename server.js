@@ -12,9 +12,7 @@ const { Pool } = require('pg');
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 const allowedOrigins = [
-  'http://chatboard.online',
   'https://chatboard.online',
-  'http://www.chatboard.online',
   'https://www.chatboard.online'
 ];
 
