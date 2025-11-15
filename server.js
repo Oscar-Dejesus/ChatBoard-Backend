@@ -10,7 +10,7 @@ app.use(cors());
 require('dotenv').config();
 const { Pool } = require('pg');
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
-/*
+
 const allowedOrigins = [
   'http://chatboard.online',
   'https://chatboard.online',
@@ -31,7 +31,7 @@ app.use(cors({
   credentials: true
 }));
 
-*/
+
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL, 
   ssl: {
