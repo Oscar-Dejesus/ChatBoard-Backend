@@ -4,7 +4,7 @@ const { OAuth2Client } = require("google-auth-library");
 const jwt = require('jsonwebtoken');
 const port =5050
 const app = express();
-const SECRET = "secretkey"
+const SECRET = process.env.SECRET_KEY
 app.use(express.json());
 app.use(cors());
 require('dotenv').config();
