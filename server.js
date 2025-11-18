@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const { OAuth2Client } = require("google-auth-library");
@@ -7,7 +8,6 @@ const app = express();
 const SECRET = process.env.SECRET_KEY
 app.use(express.json());
 app.use(cors());
-require('dotenv').config();
 const { Pool } = require('pg');
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
